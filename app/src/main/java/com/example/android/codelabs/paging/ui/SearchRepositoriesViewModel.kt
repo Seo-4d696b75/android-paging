@@ -16,6 +16,7 @@
 
 package com.example.android.codelabs.paging.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -32,7 +33,15 @@ import com.example.android.codelabs.paging.model.Repo
 import com.example.android.codelabs.paging.model.RepoSearchResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.switchMap
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -40,20 +49,33 @@ import kotlinx.coroutines.launch
  * The ViewModel works with the [GithubRepository] to get the data.
  */
 class SearchRepositoriesViewModel(
-    private val repository: GithubRepository
+    private val repository: GithubRepository,
+    private val handle: SavedStateHandle,
     ) : ViewModel() {
 
-    private var currentQuery: String? = null
-    private var currentSearchResult: Flow<PagingData<Repo>>? = null
 
-    fun searchRepos(query: String): Flow<PagingData<Repo>> {
-        val lastResult = currentSearchResult
-        if ( query == currentQuery && lastResult != null ){
-            return lastResult
-        }
-        currentQuery = query
-        val result = repository.getSearchResultStream(query).cachedIn(viewModelScope)
-        currentSearchResult = result
-        return result
+    companion object {
+        private const val LAST_SEARCH_QUERY: String = "last_search_query"
+        private const val DEFAULT_QUERY = "Android"
+    }
+
+    private var currentQuery = MutableLiveData<String>(
+        handle.get<String>(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
+    )
+
+    val searchQuery: LiveData<String> = currentQuery
+
+    val searchResult: LiveData<PagingData<Repo>> = currentQuery.switchMap {
+        repository.getSearchResultStream(it)
+    }
+
+    fun searchRepos(query: String) {
+        if ( currentQuery.value == query ) return
+        currentQuery.value = query
+    }
+
+    override fun onCleared() {
+        handle[LAST_SEARCH_QUERY] = currentQuery.value
+        super.onCleared()
     }
 }

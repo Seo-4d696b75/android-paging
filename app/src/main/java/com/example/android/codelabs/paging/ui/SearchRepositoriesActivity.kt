@@ -62,14 +62,11 @@ class SearchRepositoriesActivity : AppCompatActivity() {
         binding.list.addItemDecoration(decoration)
 
         // bind
+        val adapter = ReposAdapter()
         binding.list.adapter = adapter
 
-        // init search
-        val query =
-            savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
-        searchRepos(query)
-
-        binding.searchRepo.setText(query)
+        // init
+        binding.searchRepo.setText(viewModel.searchQuery.value)
         binding.searchRepo.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 binding.updateRepoListFromInput()
@@ -84,6 +81,9 @@ class SearchRepositoriesActivity : AppCompatActivity() {
                 true
             } else false
         }
+        viewModel.searchResult.observe(this){
+            adapter.submitData(this.lifecycle, it)
+        }
         lifecycleScope.launch {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
@@ -94,28 +94,12 @@ class SearchRepositoriesActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        private const val LAST_SEARCH_QUERY: String = "last_search_query"
-        private const val DEFAULT_QUERY = "Android"
-    }
-
-    private var searchJob: Job? = null
-    private val adapter = ReposAdapter()
     private lateinit var viewModel: SearchRepositoriesViewModel
-
-    private fun searchRepos(query: String) {
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
-            viewModel.searchRepos(query).collect {
-                adapter.submitData(it)
-            }
-        }
-    }
 
     private fun ActivitySearchRepositoriesBinding.updateRepoListFromInput() {
         searchRepo.text.trim().let {
             if (it.isNotEmpty()) {
-                searchRepos(it.toString())
+                viewModel.searchRepos(it.toString())
             }
         }
     }

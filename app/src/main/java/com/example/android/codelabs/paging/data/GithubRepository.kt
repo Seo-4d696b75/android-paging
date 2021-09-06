@@ -17,9 +17,11 @@
 package com.example.android.codelabs.paging.data
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.android.codelabs.paging.api.GithubService
 import com.example.android.codelabs.paging.api.IN_QUALIFIER
 import com.example.android.codelabs.paging.model.Repo
@@ -37,13 +39,13 @@ private const val GITHUB_STARTING_PAGE_INDEX = 1
  */
 class GithubRepository(private val service: GithubService) {
 
-    fun getSearchResultStream(query: String): Flow<PagingData<Repo>> {
+    fun getSearchResultStream(query: String): LiveData<PagingData<Repo>> {
         return Pager(
             config = PagingConfig(
                 NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             )
-        ) { GithubDataSource(service, query) }.flow
+        ) { GithubDataSource(service, query) }.liveData
     }
 
     companion object {
