@@ -37,6 +37,7 @@ import com.example.android.codelabs.paging.databinding.ActivitySearchRepositorie
 import com.example.android.codelabs.paging.model.RepoSearchResult
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
@@ -81,10 +82,10 @@ class SearchRepositoriesActivity : AppCompatActivity() {
                 true
             } else false
         }
-        viewModel.searchResult.observe(this){
-            adapter.submitData(this.lifecycle, it)
-        }
         lifecycleScope.launch {
+            viewModel.searchResult.collectLatest {
+                adapter.submitData(it)
+            }
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
                 .filter { it.refresh is LoadState.NotLoading }

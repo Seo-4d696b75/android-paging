@@ -31,21 +31,18 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import retrofit2.HttpException
 import java.io.IOException
 
-// GitHub page API is 1 based: https://developer.github.com/v3/#pagination
-private const val GITHUB_STARTING_PAGE_INDEX = 1
-
 /**
  * Repository class that works with local and remote data sources.
  */
 class GithubRepository(private val service: GithubService) {
 
-    fun getSearchResultStream(query: String): LiveData<PagingData<Repo>> {
+    fun getSearchResultStream(query: String): Flow<PagingData<Repo>> {
         return Pager(
             config = PagingConfig(
                 NETWORK_PAGE_SIZE,
                 enablePlaceholders = false
             )
-        ) { GithubDataSource(service, query) }.liveData
+        ) { GithubDataSource(service, query) }.flow
     }
 
     companion object {

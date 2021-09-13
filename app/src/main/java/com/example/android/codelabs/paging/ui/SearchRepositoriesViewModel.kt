@@ -59,15 +59,15 @@ class SearchRepositoriesViewModel(
         private const val DEFAULT_QUERY = "Android"
     }
 
-    private var currentQuery = MutableLiveData<String>(
+    private var currentQuery = MutableStateFlow<String>(
         handle.get<String>(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
     )
 
-    val searchQuery: LiveData<String> = currentQuery
+    val searchQuery: StateFlow<String> = currentQuery
 
-    val searchResult: LiveData<PagingData<Repo>> = currentQuery.switchMap {
+    val searchResult: Flow<PagingData<Repo>> = currentQuery.flatMapLatest {
         repository.getSearchResultStream(it)
-    }
+    }.cachedIn(viewModelScope)
 
     fun searchRepos(query: String) {
         if ( currentQuery.value == query ) return
