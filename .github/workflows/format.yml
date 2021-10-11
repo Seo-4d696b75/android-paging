@@ -10,6 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-      - uses: actions/checkout@v2
-      - name: Debug
+      - name: chekout
+        uses: actions/checkout@v2
+      - name: show branches
         run: echo "from:${{ github.head_ref }} to:${{ github.base_ref }}"
+      - name: format
+        run: |
+          ./gradlew ktlintFormat
+      - name: install hub
+        uses: geertvdc/setup-hub@v1.0.0
+      - name: create PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          hub pull-request -b ${{ github.base_ref }} -m "ktlint format"
