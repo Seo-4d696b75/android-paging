@@ -55,7 +55,10 @@ class SearchRepositoriesActivity : AppCompatActivity() {
 
         // bind
         val adapter = ReposAdapter()
-        binding.list.adapter = adapter
+        binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = ReposLoadStateAdapter { adapter.retry() },
+            footer = ReposLoadStateAdapter { adapter.retry() }
+        )
 
         // init
         binding.searchRepo.setText(viewModel.searchQuery.value)
