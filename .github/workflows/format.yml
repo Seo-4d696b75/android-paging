@@ -21,16 +21,17 @@ jobs:
         id: diff
         run: |
           diff=$(git diff)
+          echo "$diff"
           test -n "$diff" && change="found" || change="none"
           echo "::set-output name=change::$change"
-      - name: debug
-        if: steps.diff.outputs.change == 'found'
-        run: |
-          echo "change"
       - name: create PR
-        if: steps.diff.outputs.change == 'hoge'
+        if: steps.diff.outputs.change == 'found'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git branch feature/format
+          git checkout feature/format
+          git add .
+          git commit -m "ktlint format"
           hub push
-          hub pull-request -b ${{ github.base_ref }} -m "ktlint format"
+          hub pull-request -b ${{ github.base_ref }} -m "Auto Format"
