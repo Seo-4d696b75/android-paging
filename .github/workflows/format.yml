@@ -17,9 +17,21 @@ jobs:
       - name: format
         run: |
           ./gradlew ktlintFormat
+      - name: detect diff
+        id: diff
+        run: |
+          diff=$(git diff)
+          test -n $diff && status="change" || staus="none"
+          echo "::set-output name=status::$status"
+      - name: debug
+        if: steps.diff.outputs.status == "change"
+        run: |
+          echo "change"
       - name: create PR
+        if: steps.diff.outputs.status == "hoge"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "run if any change"
           hub push
           hub pull-request -b ${{ github.base_ref }} -m "ktlint format"
