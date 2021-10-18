@@ -33,5 +33,5 @@ jobs:
           git checkout feature/format
           git add .
           git commit -m "ktlint format"
-          hub push
+          git push --set-upstream origin feature/format
           hub pull-request -b ${{ github.base_ref }} -m "Auto Format"
