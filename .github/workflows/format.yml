@@ -21,14 +21,14 @@ jobs:
         id: diff
         run: |
           diff=$(git diff)
-          test -n $diff && status="change" || staus="none"
-          echo "::set-output name=status::$status"
+          test -n $diff && change="found" || change="none"
+          echo "::set-output name=change::$change"
       - name: debug
-        if: steps.diff.outputs.status == 'change'
+        if: steps.diff.outputs.change == 'found'
         run: |
           echo "change"
       - name: create PR
-        if: steps.diff.outputs.status == 'hoge'
+        if: steps.diff.outputs.change == 'hoge'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
