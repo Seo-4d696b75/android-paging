@@ -34,4 +34,8 @@ jobs:
           git add .
           git commit -m "ktlint format"
           git push --set-upstream origin feature/format
-          hub pull-request -b ${{ github.base_ref }} -m "Auto Format"
+          hub pull-request -b ${{ github.base_ref }} -m "Auto Format
+
+          This PR contains formatted codes by KtLint.
+          - [ktlint](https://github.com/pinterest/ktlint)
+          - [ktlint-gradle](https://github.com/jlleitschuh/ktlint-gradle)"

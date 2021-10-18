@@ -38,7 +38,7 @@ class SearchRepositoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySearchRepositoriesBinding.inflate(layoutInflater)
-        val view = binding.root
+        val view=binding.root
         setContentView(view)
 
         // get the view model
