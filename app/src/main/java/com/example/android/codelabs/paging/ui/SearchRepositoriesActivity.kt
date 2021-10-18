@@ -38,7 +38,7 @@ class SearchRepositoriesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivitySearchRepositoriesBinding.inflate(layoutInflater)
-        val view=binding.root
+        val view = binding.root
         setContentView(view)
 
         // get the view model
@@ -54,7 +54,7 @@ class SearchRepositoriesActivity : AppCompatActivity() {
         binding.list.addItemDecoration(decoration)
 
         // bind
-        val adapter=ReposAdapter()
+        val adapter = ReposAdapter()
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
             header = ReposLoadStateAdapter { adapter.retry() },
             footer = ReposLoadStateAdapter { adapter.retry() }
