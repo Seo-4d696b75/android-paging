@@ -16,20 +16,12 @@
 
 package com.example.android.codelabs.paging.data
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.liveData
 import com.example.android.codelabs.paging.api.GithubService
-import com.example.android.codelabs.paging.api.IN_QUALIFIER
 import com.example.android.codelabs.paging.model.Repo
-import com.example.android.codelabs.paging.model.RepoSearchResult
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import retrofit2.HttpException
-import java.io.IOException
 
 /**
  * Repository class that works with local and remote data sources.

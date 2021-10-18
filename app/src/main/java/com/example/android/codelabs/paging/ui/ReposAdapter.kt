@@ -19,7 +19,6 @@ package com.example.android.codelabs.paging.ui
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import com.example.android.codelabs.paging.model.Repo
 
 /**

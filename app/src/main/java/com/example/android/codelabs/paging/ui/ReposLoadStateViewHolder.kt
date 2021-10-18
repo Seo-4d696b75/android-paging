@@ -39,7 +39,7 @@ class ReposLoadStateViewHolder(
 
 class ReposLoadStateAdapter(
     private val callback: () -> Unit
-): LoadStateAdapter<ReposLoadStateViewHolder>() {
+) : LoadStateAdapter<ReposLoadStateViewHolder>() {
     override fun onBindViewHolder(
         holder: ReposLoadStateViewHolder,
         loadState: LoadState
