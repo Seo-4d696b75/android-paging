@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: chekout
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.base_ref }}
       - name: show branches
         run: echo "from:${{ github.head_ref }} to:${{ github.base_ref }}"
       - name: format
@@ -33,7 +35,7 @@ jobs:
           git checkout feature/format
           git add .
           git commit -m "ktlint format"
-          git push --set-upstream origin feature/format
+          git push --set-upstream --force origin feature/format
           hub pull-request -b ${{ github.base_ref }} -m "Auto Format
 
           This PR contains formatted codes by KtLint.
