@@ -69,8 +69,8 @@ class SearchRepositoriesActivity : AppCompatActivity() {
             } else false
         }
         binding.searchRepo.setOnKeyListener { v, keyCode, event ->
-            if (event.action == KeyEvent.ACTION_DOWN
-                && keyCode == KeyEvent.KEYCODE_ENTER
+            if (event.action == KeyEvent.ACTION_DOWN &&
+                keyCode == KeyEvent.KEYCODE_ENTER
             ) {
                 binding.updateRepoListFromInput()
                 true

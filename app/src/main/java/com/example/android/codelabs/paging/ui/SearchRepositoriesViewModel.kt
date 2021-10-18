@@ -35,8 +35,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 class SearchRepositoriesViewModel(
     private val repository: GithubRepository,
     private val handle: SavedStateHandle,
-    ) : ViewModel() {
-
+) : ViewModel() {
 
     companion object {
         private const val LAST_SEARCH_QUERY: String = "last_search_query"
@@ -54,7 +53,7 @@ class SearchRepositoriesViewModel(
     }.cachedIn(viewModelScope)
 
     fun searchRepos(query: String) {
-        if ( currentQuery.value == query ) return
+        if (currentQuery.value == query) return
         currentQuery.value = query
     }
 
