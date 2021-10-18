@@ -29,7 +29,7 @@ jobs:
         run: |
           git ls-remote --heads https://github.com/${{ github.repository }}.git
           exist=$(git ls-remote --heads https://github.com/${{ github.repository }}.git
-            feature/format | wc -l)
+            | grep feature/format | wc -l)
           echo "::set-output name=exists::$exists"
       - name: update PR
         if: steps.diff.outputs.count > 0 && steps.remote_branch.outputs.exists == 1
