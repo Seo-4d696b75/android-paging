@@ -20,12 +20,10 @@ jobs:
       - name: detect diff
         id: diff
         run: |
-          diff=$(git diff)
-          echo "$diff"
-          test -n "$diff" && change="found" || change="none"
-          echo "::set-output name=change::$change"
+          git diff
+          echo "::set-output name=count::$(git diff --name-only | wc -l)"
       - name: create PR
-        if: steps.diff.outputs.change == 'found'
+        if: steps.diff.outputs.count > 0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
