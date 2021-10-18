@@ -13,10 +13,10 @@ private const val GITHUB_STARTING_PAGE_INDEX = 1
 class GithubDataSource(
     private val service: GithubService,
     private val query: String
-    ) : PagingSource<Int, Repo>() {
+) : PagingSource<Int, Repo>() {
     override fun getRefreshKey(state: PagingState<Int, Repo>): Int? {
         return state.anchorPosition?.let { anchor ->
-            state.closestPageToPosition(anchor)?.let {closest ->
+            state.closestPageToPosition(anchor)?.let { closest ->
                 closest.prevKey?.plus(1) ?: closest.nextKey?.minus(1)
             }
         }
