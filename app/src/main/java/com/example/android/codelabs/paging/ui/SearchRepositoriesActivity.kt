@@ -54,7 +54,7 @@ class SearchRepositoriesActivity : AppCompatActivity() {
         binding.list.addItemDecoration(decoration)
 
         // bind
-        val adapter = ReposAdapter()
+        val adapter=ReposAdapter()
         binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
             header = ReposLoadStateAdapter { adapter.retry() },
             footer = ReposLoadStateAdapter { adapter.retry() }
