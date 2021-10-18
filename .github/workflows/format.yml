@@ -21,7 +21,7 @@ jobs:
         id: diff
         run: |
           diff=$(git diff)
-          test -n $diff && change="found" || change="none"
+          test -n "$diff" && change="found" || change="none"
           echo "::set-output name=change::$change"
       - name: debug
         if: steps.diff.outputs.change == 'found'
