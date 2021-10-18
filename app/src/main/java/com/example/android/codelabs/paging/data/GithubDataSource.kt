@@ -16,7 +16,7 @@ class GithubDataSource(
     ) : PagingSource<Int, Repo>() {
     override fun getRefreshKey(state: PagingState<Int, Repo>): Int? {
         return state.anchorPosition?.let { anchor ->
-            state.closestPageToPosition(anchor)?.let { closest ->
+            state.closestPageToPosition(anchor)?.let {closest ->
                 closest.prevKey?.plus(1) ?: closest.nextKey?.minus(1)
             }
         }
