@@ -56,7 +56,7 @@ jobs:
           base: ${{ github.base_ref }}
           title: Auto Format
           body: |
-            Automated changes by [create-pull-request](https://github.com/peter-evans/create-pull-request)
-            GitHub action.
-            These changes contain formatted codes by [ktlint](https://github.com/pinterest/ktlint)
-            with [gradle plugin](https://github.com/jlleitschuh/ktlint-gradle).
+            Automated changes by [create-pull-request](https://github
+            .com/peter-evans/create-pull-request) GitHub action.
+            These changes contain formatted codes by [ktlint](https://github
+            .com/pinterest/ktlint) with [gradle plugin](https://github.com/jlleitschuh/ktlint-gradle).
