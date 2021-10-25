@@ -29,7 +29,7 @@ import com.example.android.codelabs.paging.model.Repo
 /**
  * View Holder for a [Repo] RecyclerView list item.
  */
-class RepoViewHolder(view: View):RecyclerView.ViewHolder(view) {
+class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.repo_name)
     private val description: TextView = view.findViewById(R.id.repo_description)
     private val stars: TextView = view.findViewById(R.id.repo_stars)
