@@ -5,6 +5,8 @@ on:
       - main
     types:
       - closed
+env:
+  GRADLE_KTLINT_TASK: 'ktlintFormat'
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -18,7 +20,7 @@ jobs:
         run: echo "from:${{ github.head_ref }} to:${{ github.base_ref }}"
       - name: format
         run: |
-          ./gradlew ktlintFormat
+          ./gradlew $GRADLE_KTLINT_TASK
       - name: detect diff
         id: diff
         run: |
