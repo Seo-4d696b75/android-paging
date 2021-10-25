@@ -39,5 +39,4 @@ jobs:
           title: Auto format with ktlint
           body: |
             Automated changes by [${{ github.workflow }}](https://github.com/${{ github
-            .repository }}/actions/runs/${{ github.run_id }}) with [create-pull-request]
-            (https://github.com/peter-evans/create-pull-request) GitHub action.
+            .repository }}/actions/runs/${{ github.run_id }})
