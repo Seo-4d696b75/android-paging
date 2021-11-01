@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-20.04
     if: github.event.pull_request.merged == true && !startsWith(github.head_ref, 'feature/format')
     steps:
+      - name: debug
+        run: |
+          echo $GITHUB_REF
+          ls -l /usr/local/lib/android/sdk/ndk
       - name: chekout
         uses: actions/checkout@v2
         with:
