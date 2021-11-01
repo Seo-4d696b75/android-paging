@@ -3,9 +3,21 @@ on:
   pull_request:
     branches:
       - main
+env:
+  NDK_VERSION: 21.3.6528147
 jobs:
   debug:
     runs-on: ubuntu-20.04
     steps:
       - name: debug
         run: echo $GITHUB_REF
+      - name: restore NDK cache
+      　id: ndk-cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            /usr/local/lib/android/sdk/ndk/*
+            !/usr/local/lib/android/sdk/ndk/21.4.7075529
+            !/usr/local/lib/android/sdk/ndk/22.1.7171670
+            !/usr/local/lib/android/sdk/ndk/23.0.7599858
+          key: ${{ runner.os }}-ndk-${{ env.NDK_VERSION }}-v4
