@@ -48,7 +48,7 @@ class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 
     fun bind(repo: Repo?) {
-        if (repo == null) {
+        if (repo==null) {
             val resources = itemView.resources
             name.text = resources.getString(R.string.loading)
             description.visibility = View.GONE
