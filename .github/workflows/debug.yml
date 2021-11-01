@@ -12,7 +12,7 @@ jobs:
       - name: debug
         run: echo $GITHUB_REF
       - name: restore NDK cache
-      　id: ndk-cache
+        id: ndk-cache
         uses: actions/cache@v2
         with:
           path: |
