@@ -1,0 +1,11 @@
+name: debug
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  debug:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: debug
+        run: echo $GITHUB_REF
