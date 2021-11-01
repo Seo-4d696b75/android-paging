@@ -7,6 +7,7 @@ on:
       - closed
 env:
   GRADLE_KTLINT_TASK: 'ktlintFormat'
+  NDK_VERSION: 21.3.6528147
 jobs:
   format:
     runs-on: ubuntu-latest
@@ -21,6 +22,8 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 11
+      - name: setup NDK
+        run: ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;${NDK_VERSION}" --sdk_root=${ANDROID_SDK_ROOT}
       - name: restore gradle cache
         uses: actions/cache@v2
         with:
