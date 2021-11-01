@@ -28,8 +28,12 @@ jobs:
         id: ndk-cache
         uses: actions/cache@v2
         with:
-          path: ${{ env.ANDROID_HOME }}/ndk/${{ env.NDK_VERSION }}
-          key: ${{ runner.os }}-ndk-${{ env.NDK_VERSION }}-v3
+          path: |
+            /usr/local/lib/android/sdk/ndk
+            !/usr/local/lib/android/sdk/ndk/21.4.7075529
+            !/usr/local/lib/android/sdk/ndk/22.1.7171670
+            !/usr/local/lib/android/sdk/ndk/23.0.7599858
+          key: ${{ runner.os }}-ndk-${{ env.NDK_VERSION }}-v4
       - name: setup NDK
         if: steps.ndk-cache.outputs.cache-hit != 'true'
         run: |
