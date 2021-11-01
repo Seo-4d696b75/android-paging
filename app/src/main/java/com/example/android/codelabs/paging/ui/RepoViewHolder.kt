@@ -41,7 +41,7 @@ class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
             repo?.url?.let { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                val intent=Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 view.context.startActivity(intent)
             }
         }
