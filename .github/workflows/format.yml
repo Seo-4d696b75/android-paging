@@ -34,18 +34,13 @@ jobs:
         id: ndk-cache
         uses: actions/cache@v2
         with:
-          path: |
-            /usr/local/lib/android/sdk/ndk/*
-            !/usr/local/lib/android/sdk/ndk/21.4.7075529
-            !/usr/local/lib/android/sdk/ndk/22.1.7171670
-            !/usr/local/lib/android/sdk/ndk/23.0.7599858
-          key: ${{ runner.os }}-ndk-${{ env.NDK_VERSION }}-v4
+          path: /usr/local/lib/android/sdk/ndk/${{ env.NDK_VERSION }}
+          key: ${{ runner.os }}-ndk-${{ env.NDK_VERSION }}-v5
       - name: setup NDK
         if: steps.ndk-cache.outputs.cache-hit != 'true'
         run: |
-          ${ANDROID_HOME}/tools/bin/sdkmanager \
-            --install "ndk;${NDK_VERSION}" \
-            --sdk_root=${ANDROID_SDK_ROOT}
+          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+            --install "ndk;${NDK_VERSION}"
       - name: debug
         run: ls -l /usr/local/lib/android/sdk/ndk
       - name: restore gradle cache
