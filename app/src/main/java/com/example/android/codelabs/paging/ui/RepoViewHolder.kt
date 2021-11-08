@@ -41,14 +41,14 @@ class RepoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     init {
         view.setOnClickListener {
             repo?.url?.let { url ->
-                val intent=Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 view.context.startActivity(intent)
             }
         }
     }
 
     fun bind(repo: Repo?) {
-        if (repo==null) {
+        if (repo == null) {
             val resources = itemView.resources
             name.text = resources.getString(R.string.loading)
             description.visibility = View.GONE
